@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Person from './Person/Person';
 
@@ -6,8 +6,77 @@ import Person from './Person/Person';
 /**
  * class-based components (also referred to as "containers", "smart" or "stateful" components)
  */
-class App extends Component {
-  state = {
+const App = (props) => {
+  const [personsState, setPersonState ] = useState({
+    persons: [
+      {
+        name: 'Suman',
+        age: 28
+      },
+      {
+        name: 'Nupur',
+        age: 26,
+        hobbies: 'Cooking'
+      }
+    ],
+    showPerson: false
+  });
+  const switchNameHandler = (name) => {
+    /**
+     * this.setState merge the object while setPersonState replace the complete object,
+     * better to take slice of the object, if you need limited object to update
+     */
+    setPersonState({
+      ...personsState,
+      persons: [
+      {
+        name,
+        age: 28
+      },
+      {
+        name: 'Nupur Jha',
+        age: 26,
+        hobbies: 'Cooking'
+      }
+    ]});
+  }
+
+  const toggleVisibility = () => {
+    setPersonState({
+      ...personsState,
+      showPerson: !personsState.showPerson
+    });
+  }
+
+  const style = {
+    backgroundColor: 'white',
+    font: 'inherit',
+    border: '1px solid blue',
+    padding: '8px',
+    cursor: 'pointer'
+  }
+
+  return (
+    <div className="App">
+      <h1>Hi, I'm a react app!</h1>
+      <button style={style} onClick={toggleVisibility}>Show/Hide Person</button>
+      { personsState.showPerson ?
+          personsState.persons.map(p => (
+            // <Person key={p.name} name={p.name} age={p.age} click={switchNameHandler.bind(this, 
+            //   'Suman Kumar Jha')}>Hobbies: {p.hobbies || 'Racing'}</Person>
+            <Person key={p.name} name={p.name} age={p.age} click={switchNameHandler}>Hobbies: {p.hobbies || 'Racing'}</Person>
+          )) :
+          null
+      }
+    </div>
+  );
+}
+
+export default App;
+
+
+/*
+state = {
     persons: [
       {
         name: 'Suman',
@@ -34,26 +103,4 @@ class App extends Component {
       }
     ]});
   }
-
-  render() {
-    return (
-      <div className="App">
-        <h1>Hi, I'm a react app!</h1>
-        <button onClick={this.switchNameHandler}>Switch Name</button>
-        {
-          this.state.persons.map(p => (
-            <Person key={p.name} name={p.name} age={p.age}>Hobbies: {p.hobbies || 'Racing'}</Person>
-          ))
-        }
-      </div>
-    );
-    /**
-     * @example Above code compiles to below code
-     */
-    // return React.createElement('div', {
-    //   className: 'App'
-    // }, React.createElement('h1', null, 'Hi, I\'m a react app!'));
-  }
-}
-
-export default App;
+  */

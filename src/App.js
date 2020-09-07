@@ -1,8 +1,23 @@
 import React, { useState } from 'react';
 import './App.css';
 
-import Radium, {StyleRoot} from 'radium';
+// import Radium, {StyleRoot} from 'radium';
+import styled from 'styled-components';
 import Person from './Person/Person';
+
+const StyledButton = styled.button`
+  background-color: ${({alt}) => alt ? 'red' : 'green'};
+  color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({alt}) => alt ? 'salmon' : 'lightgreen'};
+    color: black;
+  }
+`;
 
 
 /**
@@ -46,38 +61,30 @@ const App = (props) => {
     });
   }
 
-  const style = {
-    backgroundColor: 'green',
-    color: 'white',
-    font: 'inherit',
-    border: '1px solid blue',
-    padding: '8px',
-    cursor: 'pointer',
-    ':hover': {
-      backgroundColor: 'lightgreen',
-      color: 'black'
-    }
-  }
 
   return (
-    <StyleRoot>
-      <div className="App">
-        <h1>Hi, I'm a react app!</h1>
-        <button style={style} onClick={toggleVisibility}>Show/Hide Person</button>
-        { personsState.showPerson ?
-            personsState.persons.map((p, index) => (
-              // <Person key={p.name} name={p.name} age={p.age} click={switchNameHandler.bind(this, 
-              //   'Suman Kumar Jha')}>Hobbies: {p.hobbies || 'Racing'}</Person>
-              <Person key={p.name} name={p.name} age={p.age} click={(evt) => switchNameHandler(evt, index)}>Hobbies: {p.hobbies || 'Racing'}</Person>
-            )) :
-            null
-        }
-      </div>
-    </StyleRoot>
+    // <StyleRoot>
+      
+    // </StyleRoot>
+    <div className="App">
+      <h1>Hi, I'm a react app!</h1>
+      {/* <button style={style} onClick={toggleVisibility}>Show/Hide Person</button> */}
+      <StyledButton alt={personsState.showPerson} onClick={toggleVisibility}>Show/Hide Person</StyledButton>
+      { personsState.showPerson ?
+          personsState.persons.map((p, index) => (
+            // <Person key={p.name} name={p.name} age={p.age} click={switchNameHandler.bind(this, 
+            //   'Suman Kumar Jha')}>Hobbies: {p.hobbies || 'Racing'}</Person>
+            <Person key={p.name} name={p.name} age={p.age} click={(evt) => switchNameHandler(evt, index)}>Hobbies: {p.hobbies || 'Racing'}</Person>
+          )) :
+          null
+      }
+    </div>
   );
 }
 
-export default Radium(App);
+// export default Radium(App);
+export default App;
+
 
 
 /*

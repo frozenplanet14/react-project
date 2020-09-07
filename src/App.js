@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
+
+import Radium, {StyleRoot} from 'radium';
 import Person from './Person/Person';
 
 
@@ -21,24 +23,20 @@ const App = (props) => {
     ],
     showPerson: false
   });
-  const switchNameHandler = (name) => {
+  const switchNameHandler = (name, index) => {
+    const persons = [...personsState.persons];
+    persons[index] = {
+      ...persons[index],
+      name
+    };
     /**
      * this.setState merge the object while setPersonState replace the complete object,
      * better to take slice of the object, if you need limited object to update
      */
     setPersonState({
       ...personsState,
-      persons: [
-      {
-        name,
-        age: 28
-      },
-      {
-        name: 'Nupur Jha',
-        age: 26,
-        hobbies: 'Cooking'
-      }
-    ]});
+      persons
+    });
   }
 
   const toggleVisibility = () => {
@@ -49,30 +47,37 @@ const App = (props) => {
   }
 
   const style = {
-    backgroundColor: 'white',
+    backgroundColor: 'green',
+    color: 'white',
     font: 'inherit',
     border: '1px solid blue',
     padding: '8px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    ':hover': {
+      backgroundColor: 'lightgreen',
+      color: 'black'
+    }
   }
 
   return (
-    <div className="App">
-      <h1>Hi, I'm a react app!</h1>
-      <button style={style} onClick={toggleVisibility}>Show/Hide Person</button>
-      { personsState.showPerson ?
-          personsState.persons.map(p => (
-            // <Person key={p.name} name={p.name} age={p.age} click={switchNameHandler.bind(this, 
-            //   'Suman Kumar Jha')}>Hobbies: {p.hobbies || 'Racing'}</Person>
-            <Person key={p.name} name={p.name} age={p.age} click={switchNameHandler}>Hobbies: {p.hobbies || 'Racing'}</Person>
-          )) :
-          null
-      }
-    </div>
+    <StyleRoot>
+      <div className="App">
+        <h1>Hi, I'm a react app!</h1>
+        <button style={style} onClick={toggleVisibility}>Show/Hide Person</button>
+        { personsState.showPerson ?
+            personsState.persons.map((p, index) => (
+              // <Person key={p.name} name={p.name} age={p.age} click={switchNameHandler.bind(this, 
+              //   'Suman Kumar Jha')}>Hobbies: {p.hobbies || 'Racing'}</Person>
+              <Person key={p.name} name={p.name} age={p.age} click={(evt) => switchNameHandler(evt, index)}>Hobbies: {p.hobbies || 'Racing'}</Person>
+            )) :
+            null
+        }
+      </div>
+    </StyleRoot>
   );
 }
 
-export default App;
+export default Radium(App);
 
 
 /*

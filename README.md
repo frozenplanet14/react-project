@@ -69,3 +69,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 ### Assignments
     Assignment 1: https://codesandbox.io/s/sad-blackwell-nycxe
+    Assignment 2: https://codesandbox.io/s/patient-rain-ze7b1

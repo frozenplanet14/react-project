@@ -67,6 +67,17 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
+### Enabling CSS Modules
+{
+  test: cssRegex,
+  exclude: cssModuleRegex,
+  use: getStyleLoaders({
+      importLoaders: 1,
+      modules: true,
+      localIdentName: '[name]__[local]__[hash:base64:5]'
+  }),
+}
+
 ### Assignments
     Assignment 1: https://codesandbox.io/s/sad-blackwell-nycxe
     Assignment 2: https://codesandbox.io/s/patient-rain-ze7b1

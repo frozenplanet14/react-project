@@ -4,6 +4,7 @@ import './App.css';
 // import Radium, {StyleRoot} from 'radium';
 import styled from 'styled-components';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 const StyledButton = styled.button`
   background-color: ${({alt}) => alt ? 'red' : 'green'};
@@ -74,7 +75,9 @@ const App = (props) => {
           personsState.persons.map((p, index) => (
             // <Person key={p.name} name={p.name} age={p.age} click={switchNameHandler.bind(this, 
             //   'Suman Kumar Jha')}>Hobbies: {p.hobbies || 'Racing'}</Person>
-            <Person key={p.name} name={p.name} age={p.age} click={(evt) => switchNameHandler(evt, index)}>Hobbies: {p.hobbies || 'Racing'}</Person>
+            <ErrorBoundary>
+              <Person key={p.name} name={p.name} age={p.age} click={(evt) => switchNameHandler(evt, index)}>Hobbies: {p.hobbies || 'Racing'}</Person>
+            </ErrorBoundary>
           )) :
           null
       }
